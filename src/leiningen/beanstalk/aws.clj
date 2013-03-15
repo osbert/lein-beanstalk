@@ -140,10 +140,13 @@
        key)
      value)))
 
+(def default-extra-options
+  {"aws:autoscaling:asg" {"MinSize" "1" "MaxSize" "1"}})
+
 (defn extra-options
   [options]
   (apply concat
-         (for [[namespace keyvals] options]
+         (for [[namespace keyvals] (merge default-extra-options options)]
            (for [[key value] keyvals]
              (ConfigurationOptionSetting. namespace key value)))))
 
